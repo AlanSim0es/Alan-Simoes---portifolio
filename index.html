@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --background: #F2EFE6;
+    --foreground: #100F0C;
+    --accent: #FF3B17;
+    --accent-secondary: #0B31E8;
+    --paper: #E7E2D4;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Archivo, Helvetica, Arial, sans-serif;
+    text-wrap: pretty;
+    overflow-x: hidden;
+  }
+  a { color: var(--foreground); text-decoration: none; }
+  a:hover { color: var(--accent); }
+  ::selection { background: var(--accent); color: var(--background); }
+  @keyframes om-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes om-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes om-blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+  @keyframes om-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  @media (min-width: 900px) {
+    [data-lg="3"] { grid-column: span 3 !important; }
+    [data-lg="4"] { grid-column: span 4 !important; }
+    [data-lg="5"] { grid-column: span 5 !important; }
+    [data-lg="6"] { grid-column: span 6 !important; }
+    [data-lg="7"] { grid-column: span 7 !important; }
+    [data-lg="8"] { grid-column: span 8 !important; }
+    [data-lg="9"] { grid-column: span 9 !important; }
+    [data-lg-pad="0"] { padding-top: 0 !important; }
+    section { padding-left: 34px !important; padding-right: 34px !important; }
+    header { padding-left: 34px !important; padding-right: 34px !important; }
+  }
+</style>
+</helmet>
+<div style="--accent: {{ accent }}; --accent-secondary: {{ accentSecondary }}; --background: {{ background }}; background: var(--background); position: relative; min-height: 100vh; padding-top: 40px;">
+
+  <div style="position: fixed; inset: 0; z-index: 999; pointer-events: none; opacity: 0.5; mix-blend-mode: multiply; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22/></filter><rect width=%22160%22 height=%22160%22 filter=%22url(%23n)%22 opacity=%220.35%22/></svg>');"></div>
+
+  <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 900; height: 40px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 14px; background: var(--foreground); color: var(--background); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;">
+    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ name }}<span style="color: var(--accent);">®</span></span>
+    <nav style="display: flex; gap: 14px; align-items: center;">
+      <a href="#sobre" style="color: inherit;">01</a>
+      <a href="#skills" style="color: inherit;">02</a>
+      <a href="#projetos" style="color: inherit;">03</a>
+      <a href="#exp" style="color: inherit;">04</a>
+      <a href="#contato" style="color: var(--accent); border: 1px solid var(--accent); padding: 3px 8px;">CONTATO</a>
+    </nav>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section style="position: relative; min-height: calc(100vh - 40px); padding: 28px 14px 40px; display: grid; grid-template-columns: minmax(0, 1fr); align-content: space-between; gap: 28px; overflow: hidden; border-bottom: 1.5px solid var(--foreground);">
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;">
+      <span>EST. 2026 — ARQUIVO PESSOAL Nº 001</span>
+      <span data-float data-depth="6">{{ location }} · <span style="animation: om-blink 1.2s steps(1) infinite;">●</span> DISPONÍVEL</span>
+    </div>
+
+    <div style="position: relative; display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; align-items: end;">
+
+      <div style="grid-column: 1 / -1; position: relative;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; padding-bottom: 6px;">↳ {{ role }}</div>
+        <h1 style="margin: 0; font-weight: 900; font-size: clamp(58px, 15.5vw, 235px); line-height: 0.82; letter-spacing: -0.045em; text-transform: uppercase; word-break: break-word;">
+          <span style="display: block;">{{ nameLine1 }}</span>
+          <span style="display: block; padding-left: 6vw; color: var(--background); -webkit-text-stroke: 1.6px var(--foreground);">{{ nameLine2 }}</span>
+        </h1>
+        <div data-float data-depth="-10" style="position: absolute; right: 2%; top: -6px; width: 78px; height: 78px; border-radius: 50%; background: var(--accent); color: var(--background); display: grid; place-items: center; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-align: center; animation: om-spin 14s linear infinite;">NEW<br />WORK<br />2026</div>
+      </div>
+
+      <div style="grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; padding-top: 26px; align-items: start;">
+
+        <div data-lg="7" style="grid-column: span 12; max-width: 46ch;">
+          <p style="margin: 0 0 14px; font-size: clamp(19px, 2.3vw, 31px); font-weight: 600; line-height: 1.12; letter-spacing: -0.02em;">{{ tagline }}</p>
+          <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7; letter-spacing: 0.02em;">{{ description }}</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;">
+            <a href="#projetos" style="border: 1.5px solid var(--foreground); background: var(--foreground); color: var(--background); padding: 9px 14px;" style-hover="background: var(--accent); border-color: var(--accent); color: var(--background);">VER PROJETOS ↓</a>
+            <a href="#contato" style="border: 1.5px solid var(--foreground); padding: 9px 14px;" style-hover="background: var(--accent-secondary); border-color: var(--accent-secondary); color: var(--background);">FALAR COMIGO ↗</a>
+          </div>
+        </div>
+
+        <div data-float data-depth="12" data-lg="5" style="grid-column: span 12; justify-self: end; width: min(300px, 74vw); transform: rotate(-2.2deg);">
+          <div style="border: 1.5px solid var(--foreground); background: var(--paper); padding: 8px 8px 6px; box-shadow: 9px 9px 0 var(--foreground);">
+            <div style="position: relative; aspect-ratio: 4 / 5; background-color: var(--background); background-image: repeating-linear-gradient(45deg, rgba(16,15,12,0.9) 0 1px, transparent 1px 9px); display: grid; place-items: center; overflow: hidden;">
+              <img data-img="profile" alt="retrato" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
+              <span style="position: relative; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; background: var(--background); border: 1px solid var(--foreground); padding: 4px 7px;">IMAGEM: PERFIL</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;">
+              <span>FIG. 01 — RETRATO</span><span>[ 100% ]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;">
+      <span style="animation: om-bob 2.6s ease-in-out infinite;">↓ ROLE</span>
+      <span>{{ coords }}</span>
+      <a href="{{ emailHref }}">{{ email }} ↗</a>
+    </div>
+
+    <div style="position: absolute; left: 32%; top: 18%; width: 46px; height: 46px; pointer-events: none;" data-float data-depth="-16">
+      <div style="position: absolute; top: 50%; left: 0; width: 100%; height: 1.5px; background: var(--accent);"></div>
+      <div style="position: absolute; left: 50%; top: 0; height: 100%; width: 1.5px; background: var(--accent);"></div>
+    </div>
+    <div data-float data-depth="20" style="position: absolute; right: 44%; bottom: 16%; font-size: 34px; color: var(--accent-secondary); line-height: 1; pointer-events: none;">✳</div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div style="background: var(--accent); color: var(--background); border-bottom: 1.5px solid var(--foreground); overflow: hidden; padding: 9px 0;">
+    <div style="display: flex; width: max-content; animation: om-marquee 30s linear infinite; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;">
+      <span style="padding-right: 22px;">{{ marquee }}</span>
+      <span style="padding-right: 22px;">{{ marquee }}</span>
+      <span style="padding-right: 22px;">{{ marquee }}</span>
+      <span style="padding-right: 22px;">{{ marquee }}</span>
+    </div>
+  </div>
+
+  <!-- ============ 01 SOBRE ============ -->
+  <section id="sobre" style="position: relative; padding: 56px 14px 64px; border-bottom: 1.5px solid var(--foreground); overflow: hidden;">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1.5px solid var(--foreground); padding-bottom: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;">
+      <span>01 / {{ aboutTitle }}</span><span>ARQUIVO ABERTO</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; padding-top: 34px;">
+      <div data-reveal data-lg="4" style="grid-column: span 12; max-width: 22ch;">
+        <div style="font-weight: 900; font-size: clamp(40px, 7vw, 96px); line-height: 0.86; letter-spacing: -0.04em; text-transform: uppercase;">FAÇO<br />COISAS<br /><span style="color: var(--accent);">ESTRA-</span><br /><span style="color: var(--accent);">NHAS</span></div>
+      </div>
+
+      <div data-reveal data-lg="5" style="grid-column: span 12; max-width: 60ch; display: grid; gap: 18px;">
+        <p style="margin: 0; font-size: clamp(17px, 1.9vw, 23px); line-height: 1.32; letter-spacing: -0.015em;">{{ aboutText }}</p>
+        <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.75; border-left: 1.5px solid var(--accent-secondary); padding-left: 12px;">{{ aboutSecondary }}</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; padding-top: 4px;">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+            <div style="border: 1.5px solid var(--foreground); padding: 10px 11px 12px; background: var(--paper);">
+              <div style="font-weight: 900; font-size: 40px; line-height: 0.9; letter-spacing: -0.04em;">{{ s.value }}</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; padding-top: 5px;">{{ s.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div data-reveal data-lg="3" style="grid-column: span 12; justify-self: start; width: min(240px, 66vw); transform: rotate(1.8deg);">
+        <div style="border: 1.5px solid var(--foreground); padding: 7px; background: var(--background);">
+          <div style="position: relative; aspect-ratio: 3 / 4; background-image: repeating-linear-gradient(-45deg, rgba(16,15,12,0.9) 0 1px, transparent 1px 9px); display: grid; place-items: center; overflow: hidden;">
+            <img data-img="about" alt="estudo de interface" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
+            <span style="position: relative; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; background: var(--background); border: 1px solid var(--foreground); padding: 4px 7px;">IMAGEM: RASCUNHO</span>
+          </div>
+        </div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; padding-top: 6px; text-transform: uppercase;">FIG. 02 — WIREFRAME NO PAPEL ↖</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 SKILLS ============ -->
+  <section id="skills" style="position: relative; padding: 56px 14px 66px; background: var(--foreground); color: var(--background); border-bottom: 1.5px solid var(--foreground); overflow: hidden;">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1.5px solid var(--background); padding-bottom: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;">
+      <span>02 / FERRAMENTAS</span><span>✕ ✕ ✕</span>
+    </div>
+    <div style="position: absolute; right: -2vw; top: 4%; font-weight: 900; font-size: 34vw; line-height: 0.7; letter-spacing: -0.06em; color: transparent; -webkit-text-stroke: 1.5px rgba(242,239,230,0.22); pointer-events: none;">02</div>
+
+    <div data-reveal style="position: relative; display: flex; flex-wrap: wrap; gap: 9px; align-items: center; padding: 34px 0 26px; max-width: 1100px;">
+      <sc-for list="{{ skills }}" as="sk" hint-placeholder-count="10">
+        <span style="display: inline-flex; align-items: baseline; gap: 7px; border: 1.5px solid var(--background); padding: 8px 13px 9px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;" style-hover="background: var(--accent); border-color: var(--accent); color: var(--foreground); transform: rotate(-2deg) scale(1.06);">
+          <span style="opacity: 0.5; font-size: 9px;">{{ sk.n }}</span>{{ sk.label }}
+        </span>
+      </sc-for>
+      <span style="font-size: 26px; color: var(--accent);">✦</span>
+    </div>
+
+    <div style="position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; border-top: 1.5px solid rgba(242,239,230,0.35); padding-top: 20px;">
+      <sc-for list="{{ practices }}" as="p" hint-placeholder-count="3">
+        <div data-reveal>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase;">{{ p.tag }}</div>
+          <div style="font-weight: 800; font-size: 21px; letter-spacing: -0.02em; padding: 4px 0 6px; text-transform: uppercase;">{{ p.title }}</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.65; opacity: 0.82;">{{ p.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ 03 PROJETOS ============ -->
+  <section id="projetos" style="position: relative; padding: 56px 14px 70px; border-bottom: 1.5px solid var(--foreground); overflow: hidden;">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1.5px solid var(--foreground); padding-bottom: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;">
+      <span>03 / PROJETOS SELECIONADOS</span><span>{{ projectCount }} ITENS</span>
+    </div>
+
+    <div data-reveal style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; padding-top: 30px;">
+      <div style="grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px;">
+        <a href="{{ p1.link }}" style="font-weight: 900; font-size: clamp(34px, 8.4vw, 118px); line-height: 0.86; letter-spacing: -0.045em; text-transform: uppercase;">{{ p1.title }}</a>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;">{{ p1.category }} / {{ p1.year }}</span>
+      </div>
+      <a href="{{ p1.link }}" style="grid-column: 1 / -1; position: relative; display: block; border: 1.5px solid var(--foreground); aspect-ratio: 21 / 9; background-image: repeating-linear-gradient(45deg, rgba(16,15,12,0.9) 0 1px, transparent 1px 10px); overflow: hidden; transition: transform 0.3s ease;" style-hover="transform: translate(-4px, -4px);">
+        <img data-img="p1" alt="projeto 01" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
+        <span style="position: absolute; left: 10px; bottom: 10px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; background: var(--background); border: 1px solid var(--foreground); padding: 4px 7px;">IMAGEM: AS1 — CONSOLE 3D</span>
+        <span style="position: absolute; right: 10px; top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; background: var(--accent); color: var(--background); padding: 4px 7px;">VER ↗</span>
+      </a>
+      <div style="grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7;">
+        <p style="margin: 0; max-width: 52ch;">{{ p1.description }}</p>
+        <p style="margin: 0; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7;">{{ p1.tech }}</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; padding-top: 56px; align-items: start;">
+      <div data-reveal data-lg="5" style="grid-column: span 12; max-width: 420px; transform: rotate(-1.2deg);">
+        <a href="{{ p2.link }}" style="position: relative; display: block; border: 1.5px solid var(--foreground); aspect-ratio: 3 / 4; background-image: repeating-linear-gradient(-45deg, rgba(16,15,12,0.9) 0 1px, transparent 1px 10px); overflow: hidden; box-shadow: 8px 8px 0 var(--accent-secondary);">
+          <img data-img="p2" alt="projeto 02" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
+          <span style="position: absolute; left: 10px; bottom: 10px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; background: var(--background); border: 1px solid var(--foreground); padding: 4px 7px;">IMAGEM: VERDE (VERTICAL)</span>
+        </a>
+        <div style="padding-top: 10px;">
+          <a href="{{ p2.link }}" style="font-weight: 900; font-size: clamp(26px, 4vw, 46px); line-height: 0.92; letter-spacing: -0.035em; text-transform: uppercase;">{{ p2.title }}</a>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; padding-top: 5px;">{{ p2.category }} · {{ p2.year }} · {{ p2.tech }}</div>
+          <p style="margin: 8px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7; max-width: 42ch;">{{ p2.description }}</p>
+        </div>
+      </div>
+
+      <div data-reveal data-lg="6" style="grid-column: span 12; justify-self: end; width: min(560px, 100%); padding-top: 40px;">
+        <div style="display: flex; align-items: baseline; gap: 10px; padding-bottom: 8px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em;">03 —</span>
+          <a href="{{ p3.link }}" style="font-weight: 900; font-size: clamp(26px, 4.6vw, 58px); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase;">{{ p3.title }}</a>
+        </div>
+        <a href="{{ p3.link }}" style="position: relative; display: block; border: 1.5px solid var(--foreground); aspect-ratio: 16 / 10; background-image: repeating-linear-gradient(45deg, rgba(16,15,12,0.9) 0 1px, transparent 1px 10px); overflow: hidden; transition: transform 0.3s ease;" style-hover="transform: rotate(1deg);">
+          <img data-img="p3" alt="projeto 03" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
+          <span style="position: absolute; left: 10px; bottom: 10px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; background: var(--background); border: 1px solid var(--foreground); padding: 4px 7px;">IMAGEM: LEITOR DRACULA</span>
+        </a>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7; padding-top: 9px;">
+          <p style="margin: 0; max-width: 40ch;">{{ p3.description }}</p>
+          <span style="letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7;">{{ p3.category }} / {{ p3.year }}</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ 04 SERVIÇOS + PROCESSO ============ -->
+  <section id="exp" style="position: relative; padding: 56px 14px 66px; border-bottom: 1.5px solid var(--foreground); overflow: hidden;">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1.5px solid var(--foreground); padding-bottom: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;">
+      <span>04 / SERVIÇOS &amp; PROCESSO</span><span>AGENDA ABERTA PARA FREELAS</span>
+    </div>
+
+    <div data-reveal style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 16px; padding: 30px 0 26px;">
+      <h2 style="margin: 0; font-weight: 900; font-size: clamp(38px, 8vw, 112px); line-height: 0.85; letter-spacing: -0.045em; text-transform: uppercase;">O QUE EU <span style="color: var(--accent);">FAÇO</span></h2>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; max-width: 30ch; line-height: 1.6;">{{ servicesNote }}</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px;">
+      <sc-for list="{{ services }}" as="sv" hint-placeholder-count="3">
+        <div data-reveal data-lg="4" style="grid-column: span 12; border: 1.5px solid var(--foreground); background: var(--paper); padding: 16px 15px 20px; display: flex; flex-direction: column; gap: 9px; transition: transform 0.22s ease, box-shadow 0.22s ease;" style-hover="transform: translate(-4px, -4px); box-shadow: 8px 8px 0 var(--accent);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;">
+            <span>{{ sv.n }}</span><span>{{ sv.tag }}</span>
+          </div>
+          <div style="font-weight: 900; font-size: clamp(24px, 3.4vw, 38px); line-height: 0.92; letter-spacing: -0.035em; text-transform: uppercase;">{{ sv.title }}</div>
+          <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7;">{{ sv.text }}</p>
+          <div style="margin-top: auto; padding-top: 8px; border-top: 1.5px solid var(--foreground); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;">{{ sv.detail }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; padding: 54px 0 18px; border-bottom: 1.5px solid var(--foreground);">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;">COMO A GENTE TRABALHA JUNTO</span>
+      <span style="font-size: 22px; color: var(--accent-secondary);">✳</span>
+    </div>
+
+    <div style="padding-top: 4px;">
+      <sc-for list="{{ process }}" as="st" hint-placeholder-count="4">
+        <div data-reveal style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; align-items: baseline; border-bottom: 1.5px solid var(--foreground); padding: 16px 0 18px; transition: background 0.2s ease, padding 0.2s ease;" style-hover="background: var(--accent); padding-left: 10px;">
+          <div data-lg="3" style="grid-column: span 12; font-weight: 900; font-size: clamp(34px, 5.6vw, 72px); line-height: 0.86; letter-spacing: -0.045em;">{{ st.n }}</div>
+          <div data-lg="4" style="grid-column: span 12;">
+            <div style="font-weight: 800; font-size: 19px; letter-spacing: -0.01em; text-transform: uppercase;">{{ st.title }}</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; padding-top: 3px;">{{ st.time }}</div>
+          </div>
+          <p data-lg="5" style="grid-column: span 12; margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.7; max-width: 46ch;">{{ st.text }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ 05 CONTATO ============ -->
+  <section id="contato" style="position: relative; padding: 60px 14px 26px; background: var(--foreground); color: var(--background); overflow: hidden;">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1.5px solid var(--background); padding-bottom: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;">
+      <span>05 / CONTATO</span><span>RESPOSTA EM ATÉ 24H</span>
+    </div>
+
+    <div data-reveal style="padding: 40px 0 26px;">
+      <div style="font-weight: 900; font-size: clamp(46px, 12.5vw, 200px); line-height: 0.8; letter-spacing: -0.05em; text-transform: uppercase;">
+        <span style="display: block;">VAMOS</span>
+        <span style="display: block; padding-left: 5vw; color: var(--accent);">CRIAR</span>
+        <span style="display: block; color: transparent; -webkit-text-stroke: 1.6px var(--background);">ALGO ✳</span>
+      </div>
+      <a href="{{ emailHref }}" style="display: inline-block; margin-top: 26px; color: var(--background); font-family: 'JetBrains Mono', monospace; font-size: clamp(14px, 2.6vw, 28px); letter-spacing: 0.02em; border-bottom: 2px solid var(--accent); padding-bottom: 4px; word-break: break-all;" style-hover="color: var(--accent);">{{ email }} ↗</a>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 40px;">
+      <sc-for list="{{ social }}" as="s" hint-placeholder-count="4">
+        <a href="{{ s.url }}" target="_blank" rel="noreferrer" style="color: var(--background); border: 1.5px solid var(--background); padding: 9px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; transition: transform 0.18s ease;" style-hover="background: var(--accent-secondary); border-color: var(--accent-secondary); color: var(--background); transform: translateY(-3px);">{{ s.label }} ↗</a>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; border-top: 1.5px solid rgba(242,239,230,0.4); padding-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;">
+      <span>© 2026 {{ name }} — TODOS OS DIREITOS RESERVADOS</span>
+      <span>{{ coords }}</span>
+      <a href="#" style="color: var(--background);">VOLTAR AO TOPO ↑</a>
+    </div>
+  </section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0B31E8&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#0B31E8&quot;,&quot;#FF3B17&quot;,&quot;#FF2E88&quot;,&quot;#100F0C&quot;],&quot;section&quot;:&quot;Identidade&quot;},&quot;accentSecondary&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#F5C518&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#F5C518&quot;,&quot;#FFE14D&quot;,&quot;#E8B00A&quot;,&quot;#7A5CFF&quot;],&quot;section&quot;:&quot;Identidade&quot;},&quot;background&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#F2EFE6&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#F2EFE6&quot;,&quot;#FFFFFF&quot;,&quot;#E8FF00&quot;,&quot;#DDE3EA&quot;],&quot;section&quot;:&quot;Identidade&quot;},&quot;reveal&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Movimento&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Movimento&quot;}}">
+class Component extends DCLogic {
+  /* ====== DADOS EDITÁVEIS — altere apenas aqui ====== */
+  profile = {
+    name: "ALAN SIMÕES",
+    nameLine1: "ALAN",
+    nameLine2: "SIMÕES",
+    role: "DESIGNER & DESENVOLVEDOR CRIATIVO",
+    tagline: "Desenho interfaces como quem monta uma colagem: recortando, testando e colando até fazer sentido.",
+    description: "Presto serviços de design de interface e desenvolvimento front-end: sites, landing pages, design systems e produtos digitais — do primeiro rascunho ao código em produção.",
+    location: "SÃO PAULO, BR",
+    coords: "23°33'S 46°38'W",
+    email: "contato.alansimoes@gmail.com",
+    marquee: "FRONT-END ✳ DESIGN DE INTERFACE ✳ LANDING PAGES ✳ DIREÇÃO DE ARTE ✳ DESIGN SYSTEMS ✳ TIPOGRAFIA ✳ CÓDIGO ✳"
+  };
+
+  profileImage = "images/profile.jpg";
+  aboutImage = "images/about.jpg";
+
+  about = {
+    title: "SOBRE MIM",
+    text: "Comecei desenhando em cadernos e terminei escrevendo código para que os desenhos se movessem. Hoje construo produtos digitais onde a estética não é enfeite: é a própria estrutura. Gosto de projetos com personalidade, prazos honestos e liberdade para experimentar.",
+    secondaryText: "DISPONÍVEL PARA FREELANCES, COLABORAÇÕES E PROJETOS ESTRANHOS. TRABALHO REMOTO OU PRESENCIAL, DEPENDE DO CAFÉ."
+  };
+
+  stats = [
+    { value: "02", label: "VAGAS ABERTAS ESTE MÊS" },
+    { value: "24H", label: "PARA RESPONDER VOCÊ" },
+    { value: "100%", label: "FEITO POR MIM, DO ZERO" }
+  ];
+
+  skills = ["HTML", "CSS", "JAVASCRIPT", "REACT", "NODE.JS", "PYTHON", "SQL", "FIGMA", "UX/UI", "GIT"];
+
+  practices = [
+    { tag: "PRÁTICA 01", title: "DIREÇÃO DE ARTE", text: "Sistemas visuais com opinião: tipografia, grid, cor e a coragem de deixar espaço vazio." },
+    { tag: "PRÁTICA 02", title: "FRONT-END", text: "Interfaces acessíveis e rápidas, com animação usada como argumento e não como decoração." },
+    { tag: "PRÁTICA 03", title: "EXPERIMENTOS", text: "Protótipos, ferramentas pequenas e coisas inúteis que ensinam mais que qualquer curso." }
+  ];
+
+  projects = [
+    { title: "AS1 ANALOG SYSTEM", category: "LANDING PAGE · 3D", year: "2026", description: "Landing page para um estúdio indie de jogos. O console em 3D é o centro da composição: modelado, iluminado e renderizado em tempo real no navegador, com rotação suave e reação ao mouse — sem vídeo, sem imagem pesada.", tech: "THREE.JS · WEBGL · 3D EM TEMPO REAL", image: "images/project-01.jpg", link: "#" },
+    { title: "VERDE — COZINHA VEGETAL", category: "BRANDING · DESIGN SYSTEM", year: "2026", description: "Marca criada do zero no Figma: paleta com tokens nomeados, escala tipográfica em Playfair Display e Montserrat, biblioteca de ícones documentada e wireframes do app — tudo o que precede a primeira linha de código.", tech: "FIGMA · DESIGN TOKENS · TIPOGRAFIA · WIREFRAME", image: "images/project-02b.jpg", link: "#" },
+    { title: "LEITOR DRACULA", category: "PRODUTO · LEITURA", year: "2026", description: "Leitor web para o Drácula de Bram Stoker (1897, domínio público): vinte e sete capítulos com tipografia pensada para leitura longa. Guarda a página e os capítulos lidos no próprio navegador, então você volta exatamente de onde parou.", tech: "JS · LOCALSTORAGE · TIPOGRAFIA", image: "images/project-03.jpg", link: "#" }
+  ];
+
+  servicesNote = "TRABALHO SOZINHO, DIRETO COM VOCÊ. SEM INTERMEDIÁRIO, SEM REUNIÃO INÚTIL.";
+
+  services = [
+    { tag: "SERVIÇO", title: "LANDING PAGES", text: "Página única, rápida e com personalidade — pensada para apresentar um produto, serviço ou pessoa e converter.", detail: "DE 1 A 2 SEMANAS" },
+    { tag: "SERVIÇO", title: "SITES & DESIGN", text: "Do layout no Figma ao site no ar: tipografia, grid, cor e um front-end limpo e responsivo.", detail: "ESCOPO SOB MEDIDA" },
+    { tag: "SERVIÇO", title: "FRONT-END", text: "Você já tem o design? Eu implemento com HTML, CSS e React, com atenção a detalhe e animação.", detail: "POR PÁGINA OU POR HORA" }
+  ];
+
+  process = [
+    { n: "01", title: "CONVERSA", time: "30 MINUTOS", text: "Você me conta o projeto, o prazo e o orçamento. Eu digo com sinceridade se sou a pessoa certa." },
+    { n: "02", title: "ESCOPO E PROPOSTA", time: "ATÉ 2 DIAS", text: "Escopo escrito, etapas, prazo e preço fechado. Nada de surpresa no meio do caminho." },
+    { n: "03", title: "DESIGN", time: "1 A 2 SEMANAS", text: "Direção visual, layout e ajustes com você acompanhando. Duas rodadas de revisão inclusas." },
+    { n: "04", title: "CÓDIGO E ENTREGA", time: "1 A 2 SEMANAS", text: "Implementação responsiva, testes, publicação e uma semana de suporte depois do lançamento." }
+  ];
+
+  socialLinks = {
+    email: "mailto:contato.alansimoes@gmail.com",
+    linkedin: "https://www.linkedin.com/in/gabriel-alan-simoes/",
+    github: "https://github.com/AlanSim0es"
+  };
+  /* ====== FIM DOS DADOS EDITÁVEIS ====== */
+
+  _imgV = Date.now();
+
+  loadImages() {
+    const src = {
+      profile: this.profileImage, about: this.aboutImage,
+      p1: this.projects[0].image, p2: this.projects[1].image,
+      p3: this.projects[2].image
+    };
+    document.querySelectorAll("img[data-img]").forEach(img => {
+      const url = src[img.getAttribute("data-img")];
+      if (!url) return;
+      const box = img.parentElement;
+      const badge = box && box.querySelector("span");
+      img.style.display = "";
+      img.onerror = () => { img.style.display = "none"; };
+      img.onload = () => {
+        if (badge) badge.style.display = "none";
+        if (box) box.style.backgroundImage = "none";
+      };
+      img.src = url + "?v=" + this._imgV;
+    });
+  }
+
+  componentDidUpdate() { this.loadImages(); }
+
+  componentDidMount() {
+    this.loadImages();
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce && this.props.reveal !== false) this.setupReveal();
+    if (!reduce && this.props.parallax !== false) this.setupFloat();
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+    if (this._onMove) window.removeEventListener("mousemove", this._onMove);
+  }
+
+  setupReveal() {
+    const els = Array.from(document.querySelectorAll("[data-reveal]"));
+    els.forEach((el, i) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(26px)";
+      el.style.transition = "opacity .7s cubic-bezier(.2,.7,.2,1) " + ((i % 4) * 70) + "ms, transform .7s cubic-bezier(.2,.7,.2,1) " + ((i % 4) * 70) + "ms";
+    });
+    const show = el => { el.style.opacity = "1"; el.style.transform = "none"; };
+    this._io = new IntersectionObserver(entries => {
+      entries.forEach(en => { if (en.isIntersecting) { show(en.target); this._io.unobserve(en.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+    els.forEach(el => this._io.observe(el));
+    setTimeout(() => els.forEach(show), 2500);
+  }
+
+  setupFloat() {
+    if (window.matchMedia("(max-width: 820px)").matches) return;
+    const els = Array.from(document.querySelectorAll("[data-float]")).map(el => ({
+      el, depth: parseFloat(el.getAttribute("data-depth") || "8"), base: el.style.transform || ""
+    }));
+    let x = 0, y = 0, raf = null;
+    const apply = () => {
+      raf = null;
+      els.forEach(o => {
+        o.el.style.transform = "translate3d(" + (x * o.depth).toFixed(2) + "px," + (y * o.depth).toFixed(2) + "px,0) " + o.base;
+      });
+    };
+    this._onMove = e => {
+      x = (e.clientX / window.innerWidth - 0.5) * 2;
+      y = (e.clientY / window.innerHeight - 0.5) * 2;
+      if (!raf) raf = requestAnimationFrame(apply);
+    };
+    window.addEventListener("mousemove", this._onMove, { passive: true });
+  }
+
+  renderVals() {
+    const p = this.profile, a = this.about, pr = this.projects, s = this.socialLinks;
+    return {
+      ...p,
+      accent: this.props.accent,
+      accentSecondary: this.props.accentSecondary ?? "#F5C518",
+      background: this.props.background,
+      profileImage: this.profileImage,
+      aboutImage: this.aboutImage,
+      aboutTitle: a.title,
+      aboutText: a.text,
+      aboutSecondary: a.secondaryText,
+      stats: this.stats,
+      skills: this.skills.map((label, i) => ({ label, n: String(i + 1).padStart(2, "0") })),
+      practices: this.practices,
+      p1: pr[0], p2: pr[1], p3: pr[2],
+      projectCount: String(pr.length).padStart(2, "0"),
+      servicesNote: this.servicesNote,
+      services: this.services.map((sv, i) => ({ ...sv, n: String(i + 1).padStart(2, "0") })),
+      process: this.process,
+      emailHref: s.email,
+      social: [
+        { label: "LINKEDIN", url: s.linkedin },
+        { label: "GITHUB", url: s.github },
+        { label: "E-MAIL", url: s.email }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
